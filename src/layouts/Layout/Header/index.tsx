@@ -5,12 +5,12 @@ import { StyledHeader } from './styles';
 const Header = () => {
   return (
     <StyledHeader>
-      <Container maxWidth="lg" style={{ height: '100%' }}>
+      <Container maxWidth="lg" sx={{ height: '100%' }}>
         <Stack
           justifyContent="space-between"
           alignItems="center"
           direction="row"
-          style={{ height: '100%' }}
+          sx={{ height: '100%' }}
         >
           <MyLink to={'/'}>
             <Stack

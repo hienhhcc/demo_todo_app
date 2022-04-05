@@ -42,7 +42,9 @@ const NavigationItems = () => {
         gap="0.5rem"
       >
         {navigationItems.map(({ name, to }) => (
-          <StyledNavigationItem to={to}>{name}</StyledNavigationItem>
+          <StyledNavigationItem key={name} to={to}>
+            {name}
+          </StyledNavigationItem>
         ))}
       </Stack>
     </StyledNavigationItems>

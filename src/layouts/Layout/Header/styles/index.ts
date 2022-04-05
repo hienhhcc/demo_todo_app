@@ -7,4 +7,5 @@ export const StyledHeader = styled.header`
   position: fixed;
   z-index: 5;
   background: #fff;
+  box-shadow: 0 4px rgba(0, 0, 0, 0.1);
 `;

@@ -1,9 +1,11 @@
 import usePublicRoute from 'hooks/usePublicRoute';
 
+import { LoginFeature } from 'features';
+
 const LoginPage = () => {
   usePublicRoute();
-  
-  return <h1>LoginPage</h1>;
+
+  return <LoginFeature />;
 };
 
 export default LoginPage;
