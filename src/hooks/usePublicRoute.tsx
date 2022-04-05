@@ -8,7 +8,7 @@ const usePublicRoute = () => {
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigate('/home');
+      navigate('/');
     }
   }, [isAuthenticated, navigate]);
 };
