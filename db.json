@@ -266,6 +266,21 @@
       "username": "hiendeptrai1",
       "password": "Hiendeptrai1",
       "id": 3
+    },
+    {
+      "username": "vuvinhhien",
+      "password": "Vuinhhien1",
+      "id": 4
+    },
+    {
+      "username": "vuvinhhien1",
+      "password": "Vuvinhhien1",
+      "id": 5
+    },
+    {
+      "username": "hiendeptrai2",
+      "password": "Hiendeptrai2",
+      "id": 6
     }
   ]
 }

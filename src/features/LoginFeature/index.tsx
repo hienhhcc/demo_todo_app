@@ -1,14 +1,20 @@
-import { Button, TextField, Typography } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Button, Snackbar, TextField, Typography } from '@mui/material';
+import { Link, useLocation } from 'react-router-dom';
 import { Login } from '@mui/icons-material';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
+import MuiAlert, { AlertProps } from '@mui/material/Alert';
 
+import saga from './saga';
 import useHooks from './hooks';
+import { sliceKey, reducer, actions } from './slice';
 
 import { StyledForm, StyledLogin } from './styles';
 import { DisplayErrorMessage } from '../../components';
+import { forwardRef, useState } from 'react';
+import { useInjectReducer, useInjectSaga } from 'redux-injectors';
+import { useDispatch } from 'react-redux';
 
 const schema = yup
   .object({
@@ -17,7 +23,18 @@ const schema = yup
   })
   .required();
 
+const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(
+  props,
+  ref
+) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
+
 const LoginFeature = () => {
+  useInjectSaga({ key: sliceKey, saga });
+  useInjectReducer({ key: sliceKey, reducer });
+  const dispatch = useDispatch();
+
   const {
     register: registerForm,
     formState: { errors },
@@ -28,12 +45,64 @@ const LoginFeature = () => {
     mode: 'all',
   });
 
+  const location: { state?: any } = useLocation();
   const { handlers, selectors } = useHooks();
   const { onSubmitLogin } = handlers;
-  const {} = selectors;
+  const { error } = selectors;
+
+  const [open, setOpen] = useState(true);
+  const [openError, setOpenError] = useState(true);
+  const handleClose = (
+    event?: React.SyntheticEvent | Event,
+    reason?: string
+  ) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpen(false);
+  };
+
+  const handleCloseError = (
+    event?: React.SyntheticEvent | Event,
+    reason?: string
+  ) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    dispatch(actions.clearError({}));
+  };
 
   return (
     <StyledLogin>
+      {location.state?.from === 'register' && (
+        <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+          <Alert
+            onClose={handleClose}
+            severity="success"
+            sx={{ width: '100%' }}
+          >
+            Register success, you can now login!
+          </Alert>
+        </Snackbar>
+      )}
+      {error && (
+        <Snackbar
+          open={openError}
+          autoHideDuration={6000}
+          onClose={handleCloseError}
+        >
+          <Alert
+            onClose={handleCloseError}
+            severity="error"
+            sx={{ width: '100%' }}
+          >
+            {error}
+          </Alert>
+        </Snackbar>
+      )}
+
       <Typography
         variant="h4"
         component="h2"
@@ -42,13 +111,14 @@ const LoginFeature = () => {
       >
         Login
       </Typography>
+
       <StyledForm onSubmit={handleSubmit(onSubmitLogin)}>
         <TextField
           type="text"
           label="Username"
           placeholder="Your username"
           autoComplete="off"
-          sx={{ width: '100%' }}
+          sx={{ width: '100%', mt: 2 }}
           {...registerForm('username')}
         />
         <DisplayErrorMessage errors={errors} fieldName="username" />
