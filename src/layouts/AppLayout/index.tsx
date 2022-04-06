@@ -2,7 +2,6 @@ import { Route, Routes } from 'react-router-dom';
 import { PrivateRoute } from '../../components';
 
 import {
-  AllTodoPage,
   HomePage,
   LoginPage,
   NewTodoPage,
@@ -10,6 +9,7 @@ import {
   RegisterPage,
   SingleTodoPage,
   TodoPage,
+  TodosPage,
 } from '../../pages';
 import Layout from '../Layout';
 
@@ -30,7 +30,7 @@ const AppLayout = () => {
         >
           <Route path=":todoId" element={<SingleTodoPage />} />
           <Route path="new" element={<NewTodoPage />} />
-          <Route index element={<AllTodoPage />} />
+          <Route index element={<TodosPage />} />
         </Route>
         <Route path="*" element={<NotFoundPage />} />
       </Route>

@@ -1,7 +1,7 @@
 import LoginPage from './LoginPage';
 import RegisterPage from './RegisterPage';
 import HomePage from './HomePage';
-import AllTodoPage from './AllTodoPage';
+import TodosPage from './TodosPage';
 import SingleTodoPage from './SingleTodoPage';
 import NotFoundPage from './NotFoundPage';
 import NewTodoPage from './NewTodoPage';
@@ -11,7 +11,7 @@ export {
   LoginPage,
   RegisterPage,
   HomePage,
-  AllTodoPage,
+  TodosPage,
   SingleTodoPage,
   NewTodoPage,
   NotFoundPage,

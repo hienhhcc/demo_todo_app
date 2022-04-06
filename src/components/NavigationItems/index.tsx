@@ -1,9 +1,11 @@
 import { Stack } from '@mui/material';
 import { StyledNavigationItem } from './NavigationItem/styles';
 import { StyledNavigationItems } from './styles';
+import useHooks from './hooks';
 
 const NavigationItems = () => {
-  const isAuthenticated = false;
+  const { selectors } = useHooks();
+  const { isAuthenticated } = selectors;
 
   let navigationItems = [
     {
