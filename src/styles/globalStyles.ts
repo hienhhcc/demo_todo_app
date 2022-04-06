@@ -11,6 +11,7 @@ export const GlobalStyle = createGlobalStyle`
     font-family: 'Roboto',sans-serif;
     width: 100%;
     height:100%;
+    background: orange;
   }
 
   #root {

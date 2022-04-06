@@ -14,7 +14,11 @@ const useHooks = () => {
     dispatch(actions.fetchTodo({ userId: userInfo.id }));
   }, [dispatch, userInfo.id]);
 
-  return { handlers: {}, selectors: { items } };
+  const handleDeleteItem = (id: any) => {
+    dispatch(actions.deleteTodo({ todoId: id }));
+  };
+
+  return { handlers: { handleDeleteItem }, selectors: { items } };
 };
 
 export default useHooks;

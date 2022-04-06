@@ -9,17 +9,23 @@ interface ITodo {
 
 interface InitialState {
   items: ITodo[];
+  singleTodo: ITodo | null;
+  fetchSingleTodoStatus: string;
   addStatus: string;
-  fetchStatus: string;
+  fetchTodosStatus: string;
   editStatus: string;
+  deleteStatus: string;
   error: any;
 }
 
 const initialState: InitialState = {
   items: [],
+  singleTodo: null,
+  fetchSingleTodoStatus: '',
   addStatus: '',
-  fetchStatus: '',
+  fetchTodosStatus: '',
   editStatus: '',
+  deleteStatus: '',
   error: null,
 };
 
@@ -32,7 +38,6 @@ export const todoSlice = createSlice({
       return state;
     },
     addTodoSuccess(state, action) {
-      console.log(action.payload);
       state.addStatus = ACTION_STATUS.SUCCESS;
       return state;
     },
@@ -45,11 +50,11 @@ export const todoSlice = createSlice({
       return state;
     },
     fetchTodo(state, action) {
-      state.fetchStatus = ACTION_STATUS.PENDING;
+      state.fetchTodosStatus = ACTION_STATUS.PENDING;
       return state;
     },
     fetchTodoSuccess(state, action) {
-      state.fetchStatus = ACTION_STATUS.SUCCESS;
+      state.fetchTodosStatus = ACTION_STATUS.SUCCESS;
       state.items = action.payload;
       return state;
     },
@@ -57,12 +62,55 @@ export const todoSlice = createSlice({
       state.addStatus = ACTION_STATUS.FAILED;
       return state;
     },
-    editTodo(state, action) {},
-    editTodoSuccess(state, action) {},
-    editTodoFailed(state, action) {},
-    deleteTodo(state, action) {},
-    deleteTodoSuccess(state, action) {},
-    deleteTodoFailed(state, action) {},
+    fetchSingleTodo(state, action) {
+      state.fetchSingleTodoStatus = ACTION_STATUS.PENDING;
+      return state;
+    },
+    fetchSingleTodoSuccess(state, action) {
+      state.fetchSingleTodoStatus = ACTION_STATUS.SUCCESS;
+      state.singleTodo = action.payload[0];
+      return state;
+    },
+    fetchSingleTodoFailed(state, action) {
+      state.fetchSingleTodoStatus = ACTION_STATUS.FAILED;
+      return state;
+    },
+    editTodo(state, action) {
+      state.editStatus = ACTION_STATUS.PENDING;
+      return state;
+    },
+    editTodoSuccess(state, action) {
+      state.editStatus = ACTION_STATUS.SUCCESS;
+      const todoIndex = state.items.findIndex(
+        (item: any) => item.id === action.payload.id
+      );
+      state.items[todoIndex] = action.payload;
+      return state;
+    },
+    editTodoFailed(state, action) {
+      state.editStatus = ACTION_STATUS.FAILED;
+      return state;
+    },
+    resetEditStatus(state, action) {
+      state.editStatus = '';
+      return state;
+    },
+    deleteTodo(state, action) {
+      state.deleteStatus = ACTION_STATUS.PENDING;
+      return state;
+    },
+    deleteTodoSuccess(state, action) {
+      console.log(action.payload);
+      state.deleteStatus = ACTION_STATUS.SUCCESS;
+      state.items = state.items.filter(
+        (item: any) => item.id !== action.payload.todoId
+      );
+      return state;
+    },
+    deleteTodoFailed(state, action) {
+      state.deleteStatus = ACTION_STATUS.FAILED;
+      return state;
+    },
   },
 });
 

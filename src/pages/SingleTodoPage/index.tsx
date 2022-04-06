@@ -1,5 +1,7 @@
+import SingleTodoFeature from 'features/TodoFeature/SingleTodo';
+
 const SingleTodoPage = () => {
-  return <h1>Single todo page</h1>;
+  return <SingleTodoFeature />;
 };
 
 export default SingleTodoPage;

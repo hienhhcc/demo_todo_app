@@ -3,13 +3,16 @@ import { useForm } from 'react-hook-form';
 import { StyledForm } from '../../LoginFeature/styles';
 import useHooks from './hooks';
 import { DisplayErrorMessage } from '../../../components';
-import AddCircleOutlinedIcon from '@mui/icons-material/AddCircleOutlined';
+import SaveAsIcon from '@mui/icons-material/SaveAs';
+import CircularProgress from '@mui/material/CircularProgress';
+import { useEffect } from 'react';
 
-const AddToDoFeature = () => {
+const SingleTodoFeature = () => {
   const {
     register: registerForm,
     formState: { errors },
     handleSubmit,
+    setValue,
   } = useForm({
     criteriaMode: 'all',
     mode: 'all',
@@ -22,8 +25,18 @@ const AddToDoFeature = () => {
     required: 'Todo description is required!',
   });
 
-  const { handlers } = useHooks();
-  const { onSubmitAddTodo } = handlers;
+  const { handlers, selectors } = useHooks();
+  const { onSubmitEditTodo } = handlers;
+  const { singleTodo } = selectors;
+
+  useEffect(() => {
+    setValue('name', singleTodo?.name);
+    setValue('description', singleTodo?.description);
+  }, [setValue, singleTodo]);
+
+  if (!singleTodo) {
+    return <CircularProgress />;
+  }
 
   return (
     <Box
@@ -38,14 +51,15 @@ const AddToDoFeature = () => {
       }}
     >
       <Typography variant="h4" component="h2" sx={{ textAlign: 'center' }}>
-        Add a todo
+        View and edit todo
       </Typography>
 
-      <StyledForm onSubmit={handleSubmit(onSubmitAddTodo)}>
+      <StyledForm onSubmit={handleSubmit(onSubmitEditTodo)}>
         <TextField
           label="TodoName"
           autoComplete="off"
           sx={{ width: '100%', mt: 2 }}
+          // value={singleTodo.name}
           inputRef={inputRef1}
           {...inputProps1}
         />
@@ -55,6 +69,7 @@ const AddToDoFeature = () => {
           label="TodoDescription"
           autoComplete="off"
           sx={{ width: '100%', mt: 1.5 }}
+          // value={singleTodo.description}
           rows={3}
           multiline
           inputRef={inputRef2}
@@ -62,16 +77,16 @@ const AddToDoFeature = () => {
         />
         <DisplayErrorMessage errors={errors} fieldName="description" />
         <Button
-          startIcon={<AddCircleOutlinedIcon />}
+          startIcon={<SaveAsIcon />}
           variant="contained"
           type="submit"
           sx={{ width: '100%', mt: 1 }}
         >
-          Add
+          Save
         </Button>
       </StyledForm>
     </Box>
   );
 };
 
-export default AddToDoFeature;
+export default SingleTodoFeature;

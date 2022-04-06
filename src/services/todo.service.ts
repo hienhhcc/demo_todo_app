@@ -14,6 +14,20 @@ export const fetchTodoAPI = async (payload: any) => {
   }
 };
 
+export const fetchSingleTodoAPI = async (payload: any) => {
+  const { todoId } = payload;
+  try {
+    const response = await instance.get('todos', {
+      params: {
+        id: todoId,
+      },
+    });
+    return { responseData: response.data };
+  } catch (error) {
+    return { error };
+  }
+};
+
 export const addTodoAPI = async (payload: any) => {
   const { userId, name, description } = payload;
   try {
@@ -22,6 +36,30 @@ export const addTodoAPI = async (payload: any) => {
       description,
       userId,
     });
+    return { responseData: response.data };
+  } catch (error) {
+    return { error };
+  }
+};
+
+export const editTodoAPI = async (payload: any) => {
+  const { userId, todoId, name, description } = payload;
+  try {
+    const response = await instance.put(`todos/${todoId}`, {
+      name,
+      description,
+      userId,
+    });
+    return { responseData: response.data };
+  } catch (error) {
+    return { error };
+  }
+};
+
+export const deleteTodoAPI = async (payload: any) => {
+  const { todoId } = payload;
+  try {
+    const response = await instance.delete(`todos/${todoId}`);
     return { responseData: response.data };
   } catch (error) {
     return { error };

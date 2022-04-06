@@ -7,7 +7,17 @@ export const selectTodoItems = createSelector(
   (todoSlice) => todoSlice.items
 );
 
+export const selectSingleTodoItem = createSelector(
+  selectTodoSlice,
+  (todoSlice) => todoSlice.singleTodo
+);
+
 export const selectAddStatus = createSelector(
   selectTodoSlice,
   (todoSlice) => todoSlice.addStatus
+);
+
+export const selectEditStatus = createSelector(
+  selectTodoSlice,
+  (todoSlice) => todoSlice.editStatus
 );
