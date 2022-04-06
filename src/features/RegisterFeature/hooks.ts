@@ -1,6 +1,11 @@
+import { useDispatch } from 'react-redux';
+import { actions } from './slice';
+
 const useHooks = () => {
+  const dispatch = useDispatch();
+
   const onSubmitRegister = (data: any) => {
-    console.log(data);
+    dispatch(actions.register(data));
   };
 
   return { handlers: { onSubmitRegister }, selectors: {} };

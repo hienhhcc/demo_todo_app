@@ -1,16 +1,21 @@
-import { Button, Typography } from '@mui/material';
+import { Button, TextField, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { Login } from '@mui/icons-material';
 import { useForm } from 'react-hook-form';
+import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
 
 import useHooks from './hooks';
 
-import {
-  StyledControlInput,
-  StyledForm,
-  StyledInput,
-  StyledLogin,
-} from './styles';
+import { StyledForm, StyledLogin } from './styles';
+import { DisplayErrorMessage } from '../../components';
+
+const schema = yup
+  .object({
+    username: yup.string().required('Username is required'),
+    password: yup.string().required('Password is required'),
+  })
+  .required();
 
 const LoginFeature = () => {
   const {
@@ -18,12 +23,14 @@ const LoginFeature = () => {
     formState: { errors },
     handleSubmit,
   } = useForm({
-    mode: 'all',
+    resolver: yupResolver(schema),
     criteriaMode: 'all',
+    mode: 'all',
   });
 
-  const { handlers } = useHooks();
+  const { handlers, selectors } = useHooks();
   const { onSubmitLogin } = handlers;
+  const {} = selectors;
 
   return (
     <StyledLogin>
@@ -36,21 +43,25 @@ const LoginFeature = () => {
         Login
       </Typography>
       <StyledForm onSubmit={handleSubmit(onSubmitLogin)}>
-        <StyledControlInput>
-          <StyledInput
-            type="text"
-            placeholder="Username"
-            {...registerForm('username')}
-          />
-        </StyledControlInput>
+        <TextField
+          type="text"
+          label="Username"
+          placeholder="Your username"
+          autoComplete="off"
+          sx={{ width: '100%' }}
+          {...registerForm('username')}
+        />
+        <DisplayErrorMessage errors={errors} fieldName="username" />
 
-        <StyledControlInput>
-          <StyledInput
-            type="password"
-            placeholder="Password"
-            {...registerForm('password')}
-          />
-        </StyledControlInput>
+        <TextField
+          type="password"
+          placeholder="Your password"
+          label="Password"
+          autoComplete="off"
+          sx={{ width: '100%', mt: 1.5 }}
+          {...registerForm('password')}
+        />
+        <DisplayErrorMessage errors={errors} fieldName="password" />
 
         <Button
           startIcon={<Login />}
