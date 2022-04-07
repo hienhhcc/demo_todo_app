@@ -1,20 +1,23 @@
-import { Stack } from '@mui/material';
+import { Button, Stack } from '@mui/material';
 import { StyledNavigationItem } from './NavigationItem/styles';
 import { StyledNavigationItems } from './styles';
 import useHooks from './hooks';
+import { useTranslation } from 'react-i18next';
+import { useState } from 'react';
 
 const NavigationItems = () => {
+  const { t, i18n } = useTranslation();
   const { selectors } = useHooks();
   const { isAuthenticated } = selectors;
 
   let navigationItems = [
     {
       to: '/login',
-      name: 'Login',
+      name: t('Login'),
     },
     {
       to: '/register',
-      name: 'Register',
+      name: t('Register'),
     },
   ];
 
@@ -22,15 +25,15 @@ const NavigationItems = () => {
     navigationItems = [
       {
         to: '/',
-        name: 'Home',
+        name: t('Home'),
       },
       {
         to: '/todos',
-        name: 'Todos',
+        name: t('Todos'),
       },
       {
         to: '/logout',
-        name: 'Logout',
+        name: t('Logout'),
       },
     ];
   }
@@ -43,6 +46,22 @@ const NavigationItems = () => {
         alignItems="center"
         gap="0.5rem"
       >
+        <Button
+          variant="contained"
+          onClick={() => {
+            i18n.changeLanguage('en');
+          }}
+        >
+          EN
+        </Button>
+        <Button
+          variant="contained"
+          onClick={() => {
+            i18n.changeLanguage('vn');
+          }}
+        >
+          VN
+        </Button>
         {navigationItems.map(({ name, to }) => (
           <StyledNavigationItem key={name} to={to}>
             {name}

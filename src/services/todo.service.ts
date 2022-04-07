@@ -1,7 +1,7 @@
 import instance from './axiosInstance';
 
 export const fetchTodoAPI = async (payload: any) => {
-  const { userId, _page } = payload;
+  const { userId } = payload;
   try {
     const response = await instance.get('todos', {
       params: {

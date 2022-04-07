@@ -6,6 +6,7 @@ import {
   LoginPage,
   NewTodoPage,
   NotFoundPage,
+  ReactQueryPage,
   RegisterPage,
   SingleTodoPage,
   TodoPage,
@@ -20,6 +21,7 @@ const AppLayout = () => {
         <Route index element={<HomePage />} />
         <Route path="register" element={<RegisterPage />} />
         <Route path="login" element={<LoginPage />} />
+        <Route path="reactquery" element={<ReactQueryPage />} />
         <Route
           path="todos"
           element={

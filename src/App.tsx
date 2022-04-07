@@ -4,6 +4,7 @@ import { GlobalStyle } from './styles/globalStyles';
 
 import { configureAppStore } from 'store/configureAppStore';
 import { Provider } from 'react-redux';
+import { QueryClientProvider, QueryClient } from 'react-query';
 
 const initialState = {
   authentication: {
@@ -11,15 +12,19 @@ const initialState = {
   },
 };
 
+const queryClient = new QueryClient();
+
 const store = configureAppStore(initialState);
 
 function App() {
   return (
     <Fragment>
-      <Provider store={store}>
-        <AppLayout />
-        <GlobalStyle />
-      </Provider>
+      <QueryClientProvider client={queryClient}>
+        <Provider store={store}>
+          <AppLayout />
+          <GlobalStyle />
+        </Provider>
+      </QueryClientProvider>
     </Fragment>
   );
 }

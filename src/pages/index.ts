@@ -6,6 +6,7 @@ import SingleTodoPage from './SingleTodoPage';
 import NotFoundPage from './NotFoundPage';
 import NewTodoPage from './NewTodoPage';
 import TodoPage from './TodoPage';
+import ReactQueryPage from './ReactQueryPage';
 
 export {
   LoginPage,
@@ -16,4 +17,5 @@ export {
   NewTodoPage,
   NotFoundPage,
   TodoPage,
+  ReactQueryPage,
 };
