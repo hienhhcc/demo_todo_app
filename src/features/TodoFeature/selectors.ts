@@ -21,3 +21,8 @@ export const selectEditStatus = createSelector(
   selectTodoSlice,
   (todoSlice) => todoSlice.editStatus
 );
+
+export const selectPageNumber = createSelector(
+  selectTodoSlice,
+  (todoSlice) => todoSlice.page
+);

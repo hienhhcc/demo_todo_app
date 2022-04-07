@@ -9,23 +9,29 @@ interface ITodo {
 
 interface InitialState {
   items: ITodo[];
+  itemsLength: number | null;
   singleTodo: ITodo | null;
   fetchSingleTodoStatus: string;
   addStatus: string;
   fetchTodosStatus: string;
   editStatus: string;
   deleteStatus: string;
+  searchStatus: string;
+  page: number;
   error: any;
 }
 
 const initialState: InitialState = {
   items: [],
+  itemsLength: null,
   singleTodo: null,
   fetchSingleTodoStatus: '',
   addStatus: '',
   fetchTodosStatus: '',
   editStatus: '',
   deleteStatus: '',
+  searchStatus: '',
+  page: 1,
   error: null,
 };
 
@@ -109,6 +115,23 @@ export const todoSlice = createSlice({
     },
     deleteTodoFailed(state, action) {
       state.deleteStatus = ACTION_STATUS.FAILED;
+      return state;
+    },
+    searchTodos(state, action) {
+      state.searchStatus = ACTION_STATUS.PENDING;
+      return state;
+    },
+    searchTodosSuccess(state, action) {
+      state.searchStatus = ACTION_STATUS.SUCCESS;
+      state.items = action.payload;
+      return state;
+    },
+    searchTodosFailed(state, action) {
+      state.searchStatus = ACTION_STATUS.FAILED;
+      return state;
+    },
+    setPage(state, action) {
+      state.page = action.payload.page;
       return state;
     },
   },

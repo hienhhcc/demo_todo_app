@@ -5,6 +5,7 @@ import {
   fetchSingleTodoAPI,
   editTodoAPI,
   deleteTodoAPI,
+  searchTodosAPI,
 } from './todo.service';
 
 export {
@@ -15,4 +16,5 @@ export {
   fetchSingleTodoAPI,
   editTodoAPI,
   deleteTodoAPI,
+  searchTodosAPI,
 };

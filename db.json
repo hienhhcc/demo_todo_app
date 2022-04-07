@@ -1,12 +1,6 @@
 {
   "todos": [
     {
-      "id": 11,
-      "name": "Make some noise",
-      "description": "This is todo description",
-      "userId": 1
-    },
-    {
       "id": 12,
       "name": "Watch movies",
       "description": "This is todo description",
@@ -298,30 +292,6 @@
       "description": "bvcxbcvxb",
       "userId": 1,
       "id": 60
-    },
-    {
-      "name": "sfasdafas",
-      "description": "fdsafsadfa",
-      "userId": 1,
-      "id": 61
-    },
-    {
-      "name": "qfqfqfq",
-      "description": "fqfqfq",
-      "userId": 1,
-      "id": 62
-    },
-    {
-      "name": "bfdbdfbd",
-      "description": "bfdbdfbd",
-      "userId": 1,
-      "id": 63
-    },
-    {
-      "name": "dqdqdq",
-      "description": "dqdqdq",
-      "userId": 1,
-      "id": 64
     }
   ],
   "users": [

@@ -1,11 +1,13 @@
 import instance from './axiosInstance';
 
 export const fetchTodoAPI = async (payload: any) => {
-  const { userId } = payload;
+  const { userId, _page } = payload;
   try {
     const response = await instance.get('todos', {
       params: {
         userId,
+        // _page,
+        // _limit: 7,
       },
     });
     return { responseData: response.data };
@@ -60,6 +62,20 @@ export const deleteTodoAPI = async (payload: any) => {
   const { todoId } = payload;
   try {
     const response = await instance.delete(`todos/${todoId}`);
+    return { responseData: response.data };
+  } catch (error) {
+    return { error };
+  }
+};
+
+export const searchTodosAPI = async (payload: any) => {
+  const { name } = payload;
+  try {
+    const response = await instance.get(`todos`, {
+      params: {
+        q: name,
+      },
+    });
     return { responseData: response.data };
   } catch (error) {
     return { error };

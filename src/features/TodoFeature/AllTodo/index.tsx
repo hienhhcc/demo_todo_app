@@ -5,6 +5,7 @@ import {
   List,
   ListItem,
   ListItemText,
+  Pagination,
   Stack,
   Typography,
 } from '@mui/material';
@@ -14,6 +15,10 @@ import useHooks from './hooks';
 import Modal from '@mui/material/Modal';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import usePagination from '@mui/material/usePagination/usePagination';
+// import { useInjectReducer, useInjectSaga } from 'redux-injectors';
+// import { sliceKey, reducer } from 'features/TodoFeature/slice';
+// import saga from 'features/TodoFeature/saga';
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -28,15 +33,18 @@ const style = {
 };
 
 const AllTodoFeature = () => {
+  // useInjectSaga({ key: sliceKey, saga });
+  // useInjectReducer({ key: sliceKey, reducer });
   const navigate = useNavigate();
-  const [openModal, setOpenModal] = useState(false);
+
   const [pickDeleteItemId, setPickDeleteItemId] = useState(null);
+  const [openModal, setOpenModal] = useState(false);
   const handleOpen = () => setOpenModal(true);
   const handleClose = () => setOpenModal(false);
 
   const { selectors, handlers } = useHooks();
-  const { items } = selectors;
-  const { handleDeleteItem } = handlers;
+  const { items, count, page } = selectors;
+  const { handleDeleteItem, handlePageChange } = handlers;
 
   return (
     <>
@@ -70,7 +78,7 @@ const AllTodoFeature = () => {
           mt: 3,
         }}
       >
-        {items.map((todo: any) => (
+        {items.slice(7 * (page - 1), 7 * (page - 1) + 7).map((todo: any) => (
           <ListItem
             secondaryAction={
               <Stack
@@ -110,6 +118,9 @@ const AllTodoFeature = () => {
           </ListItem>
         ))}
       </List>
+      <Stack justifyContent="center" alignItems="center" sx={{ mt: 3 }}>
+        <Pagination count={count} onChange={handlePageChange} page={page} />
+      </Stack>
     </>
   );
 };

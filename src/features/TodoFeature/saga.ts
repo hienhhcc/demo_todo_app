@@ -6,6 +6,7 @@ import {
   fetchSingleTodoAPI,
   editTodoAPI,
   deleteTodoAPI,
+  searchTodosAPI,
 } from 'services/index';
 
 import { actions } from './slice';
@@ -76,7 +77,6 @@ function* watchDeleteTodo() {
 
 function* deleteTodoTask(action: any) {
   const { responseData, error } = yield call(deleteTodoAPI, action.payload);
-  console.log(responseData);
   if (responseData) {
     yield put(
       actions.deleteTodoSuccess({
@@ -89,6 +89,34 @@ function* deleteTodoTask(action: any) {
   }
 }
 
+//! Search todo
+function* watchSearchTodos() {
+  yield takeLatest(actions.searchTodos, searchTodosTask);
+}
+
+function* searchTodosTask(action: any) {
+  const { responseData, error } = yield call(searchTodosAPI, action.payload);
+  if (responseData) {
+    yield put(actions.searchTodosSuccess(responseData));
+  } else {
+    yield put(actions.searchTodosFailed(error));
+  }
+}
+
+//!
+// function* watchSetPage() {
+//   yield takeLatest(actions.setPage, setPageTask);
+// }
+
+// function* setPageTask(action: any) {
+//   const { responseData, error } = yield put(actions.setPage);
+//   // if (responseData) {
+//   //   yield put(actions.searchTodosSuccess(responseData));
+//   // } else {
+//   //   yield put(actions.searchTodosFailed(error));
+//   // }
+// }
+
 export default function* defaultSaga() {
   yield all([
     watchFetchTodos(),
@@ -96,5 +124,7 @@ export default function* defaultSaga() {
     watchAddTodo(),
     watchEditTodo(),
     watchDeleteTodo(),
+    watchSearchTodos(),
+    // watchSetPage(),
   ]);
 }

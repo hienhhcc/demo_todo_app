@@ -1,4 +1,4 @@
-import { Button, Snackbar, TextField, Typography } from '@mui/material';
+import { Button, Input, Snackbar, TextField, Typography } from '@mui/material';
 import { Link, useLocation } from 'react-router-dom';
 import { Login } from '@mui/icons-material';
 import { useForm } from 'react-hook-form';
@@ -12,9 +12,10 @@ import { sliceKey, reducer, actions } from './slice';
 
 import { StyledForm, StyledLogin } from './styles';
 import { DisplayErrorMessage } from '../../components';
-import { forwardRef, useState } from 'react';
+import { forwardRef, useEffect, useState } from 'react';
 import { useInjectReducer, useInjectSaga } from 'redux-injectors';
 import { useDispatch } from 'react-redux';
+import { useDebounce } from 'usehooks-ts';
 
 const schema = yup
   .object({
@@ -34,6 +35,12 @@ const LoginFeature = () => {
   useInjectSaga({ key: sliceKey, saga });
   useInjectReducer({ key: sliceKey, reducer });
   const dispatch = useDispatch();
+  // const [searchField, setSearchField] = useState('');
+  // const debounce = useDebounce(searchField);
+
+  // useEffect(() => {
+  //   console.log('hello');
+  // }, [debounce]);
 
   const {
     register: registerForm,
@@ -111,7 +118,12 @@ const LoginFeature = () => {
       >
         Login
       </Typography>
-
+      {/* <Input
+        onChange={(e) => {
+          setSearchField(e.target.value);
+        }}
+        placeholder="Search"
+      /> */}
       <StyledForm onSubmit={handleSubmit(onSubmitLogin)}>
         <TextField
           type="text"
