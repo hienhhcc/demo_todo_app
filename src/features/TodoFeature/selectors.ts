@@ -26,3 +26,8 @@ export const selectPageNumber = createSelector(
   selectTodoSlice,
   (todoSlice) => todoSlice.page
 );
+
+export const selectSearchField = createSelector(
+  selectTodoSlice,
+  (todoSlice) => todoSlice.searchField
+);

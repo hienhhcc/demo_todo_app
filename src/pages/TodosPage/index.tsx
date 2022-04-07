@@ -1,13 +1,4 @@
-import {
-  Box,
-  Button,
-  Input,
-  Pagination,
-  Stack,
-  TextField,
-  Typography,
-} from '@mui/material';
-import { memo, useRef } from 'react';
+import { Box, Button, Stack, TextField, Typography } from '@mui/material';
 import AddCircleOutlinedIcon from '@mui/icons-material/AddCircleOutlined';
 import { useInjectReducer, useInjectSaga } from 'redux-injectors';
 import { useNavigate, useSearchParams } from 'react-router-dom';
@@ -19,7 +10,10 @@ import { useDebounce } from 'usehooks-ts';
 import { useDispatch, useSelector } from 'react-redux';
 import { actions } from 'features/TodoFeature/slice';
 import {} from 'react-router-dom';
-import { selectPageNumber } from '../../features/TodoFeature/selectors';
+import {
+  selectPageNumber,
+  selectSearchField,
+} from '../../features/TodoFeature/selectors';
 import { selectAuthenticationUserInfo } from '../../features/LoginFeature/selectors';
 
 const TodosPage = () => {
@@ -30,13 +24,14 @@ const TodosPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const page = useSelector(selectPageNumber);
   const userInfo = useSelector(selectAuthenticationUserInfo);
+  const searchField = useSelector(selectSearchField);
   // const isMounted = useRef(false);
 
-  const [searchField, setSearchField] = useState('');
+  // const [searchField, setSearchField] = useState('');
+
   const debounceSearchField = useDebounce(searchField);
 
   useEffect(() => {
-    // if (isMounted.current) {
     dispatch(
       actions.searchTodos({
         name: debounceSearchField,
@@ -44,18 +39,18 @@ const TodosPage = () => {
         userId: userInfo.id,
       })
     );
-    // } else {
-    //   isMounted.current = true;
-    // }
-  }, [debounceSearchField, dispatch, page]);
+  }, [debounceSearchField, dispatch, page, userInfo.id]);
 
   useEffect(() => {
-    setSearchParams(`search=${searchField}`);
-  }, [searchField, setSearchParams]);
+    setSearchParams({ search: searchField, page: page });
+  }, [searchField, setSearchParams, page]);
 
-  const handleChange = useCallback((e) => {
-    setSearchField(e.target.value);
-  }, []);
+  const handleChange = useCallback(
+    (e) => {
+      dispatch(actions.setSearchField(e.target.value));
+    },
+    [dispatch]
+  );
 
   return (
     <Box sx={{ margin: 'auto', textAlign: 'center', mt: 3 }}>
@@ -73,12 +68,13 @@ const TodosPage = () => {
           placeholder="Search todo"
           label="Search todo"
           autoComplete="off"
+          value={searchField}
           onChange={handleChange}
         />
         <Button
           variant="contained"
           startIcon={<AddCircleOutlinedIcon />}
-          onClick={() => navigate('/todos/new')}
+          onClick={() => navigate(`/todos/new?search=${searchField}`)}
         >
           Add a todo
         </Button>
@@ -88,4 +84,4 @@ const TodosPage = () => {
   );
 };
 
-export default memo(TodosPage);
+export default TodosPage;

@@ -3,7 +3,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ACTION_STATUS } from '../../../constants';
 import { selectAuthenticationUserInfo } from '../../LoginFeature/selectors';
-import { selectEditStatus, selectSingleTodoItem } from '../selectors';
+import {
+  selectEditStatus,
+  selectSearchField,
+  selectSingleTodoItem,
+} from '../selectors';
 import { actions } from '../slice';
 
 const useHooks = () => {
@@ -13,6 +17,7 @@ const useHooks = () => {
   const editStatus = useSelector(selectEditStatus);
   const singleTodo = useSelector(selectSingleTodoItem);
   const userId = useSelector(selectAuthenticationUserInfo).id;
+  const searchField = useSelector(selectSearchField);
 
   const onSubmitEditTodo = (data: any) => {
     dispatch(actions.editTodo({ ...data, todoId, userId }));
@@ -25,10 +30,12 @@ const useHooks = () => {
 
   useEffect(() => {
     if (editStatus === ACTION_STATUS.SUCCESS) {
-      navigate('/todos', { state: { from: 'edit' } });
+      navigate(`/todos?searchField=${searchField}`, {
+        state: { from: 'edit' },
+      });
       dispatch(actions.resetEditStatus({}));
     }
-  }, [editStatus, navigate, dispatch]);
+  }, [editStatus, navigate, dispatch, searchField]);
 
   return {
     handlers: { onSubmitEditTodo },

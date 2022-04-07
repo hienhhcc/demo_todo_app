@@ -17,6 +17,7 @@ interface InitialState {
   editStatus: string;
   deleteStatus: string;
   searchStatus: string;
+  searchField: string;
   page: number;
   error: any;
 }
@@ -31,6 +32,7 @@ const initialState: InitialState = {
   editStatus: '',
   deleteStatus: '',
   searchStatus: '',
+  searchField: '',
   page: 1,
   error: null,
 };
@@ -106,7 +108,6 @@ export const todoSlice = createSlice({
       return state;
     },
     deleteTodoSuccess(state, action) {
-      console.log(action.payload);
       state.deleteStatus = ACTION_STATUS.SUCCESS;
       state.items = state.items.filter(
         (item: any) => item.id !== action.payload.todoId
@@ -132,6 +133,10 @@ export const todoSlice = createSlice({
     },
     setPage(state, action) {
       state.page = action.payload.page;
+      return state;
+    },
+    setSearchField(state, action) {
+      state.searchField = action.payload;
       return state;
     },
   },

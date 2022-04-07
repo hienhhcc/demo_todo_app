@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { ACTION_STATUS } from '../../../constants';
 import { selectAuthenticationUserInfo } from '../../LoginFeature/selectors';
-import { selectAddStatus } from '../selectors';
+import { selectAddStatus, selectSearchField } from '../selectors';
 import { actions } from '../slice';
 
 const useHooks = () => {
@@ -12,6 +12,7 @@ const useHooks = () => {
 
   const userId = useSelector(selectAuthenticationUserInfo).id;
   const addStatus = useSelector(selectAddStatus);
+  const searchField = useSelector(selectSearchField);
 
   const onSubmitAddTodo = (data: any) => {
     dispatch(actions.addTodo({ ...data, userId }));
@@ -19,10 +20,10 @@ const useHooks = () => {
 
   useEffect(() => {
     if (addStatus === ACTION_STATUS.SUCCESS) {
-      navigate('/todos', { state: { from: 'add' } });
+      navigate(`/todos?search=${searchField}`, { state: { from: 'add' } });
       dispatch(actions.resetAddStatus({}));
     }
-  }, [addStatus, navigate, dispatch]);
+  }, [addStatus, navigate, dispatch, searchField]);
 
   return {
     handlers: { onSubmitAddTodo },
