@@ -103,20 +103,6 @@ function* searchTodosTask(action: any) {
   }
 }
 
-//!
-// function* watchSetPage() {
-//   yield takeLatest(actions.setPage, setPageTask);
-// }
-
-// function* setPageTask(action: any) {
-//   const { responseData, error } = yield put(actions.setPage);
-//   // if (responseData) {
-//   //   yield put(actions.searchTodosSuccess(responseData));
-//   // } else {
-//   //   yield put(actions.searchTodosFailed(error));
-//   // }
-// }
-
 export default function* defaultSaga() {
   yield all([
     watchFetchTodos(),
@@ -125,6 +111,5 @@ export default function* defaultSaga() {
     watchEditTodo(),
     watchDeleteTodo(),
     watchSearchTodos(),
-    // watchSetPage(),
   ]);
 }

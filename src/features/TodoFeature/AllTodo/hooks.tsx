@@ -14,13 +14,14 @@ const useHooks = () => {
   const PER_PAGE = 7;
   const count = Math.ceil(items.length / PER_PAGE);
 
+  console.log(items.length);
   const handlePageChange = (e: any, p: any) => {
     dispatch(actions.setPage({ page: p }));
   };
 
-  useEffect(() => {
-    dispatch(actions.fetchTodo({ userId: userInfo.id, _page: page }));
-  }, [dispatch, userInfo.id, page]);
+  // useEffect(() => {
+  //   dispatch(actions.fetchTodo({ userId: userInfo.id, _page: page }));
+  // }, [dispatch, userInfo.id, page]);
 
   const handleDeleteItem = (id: any) => {
     dispatch(actions.deleteTodo({ todoId: id }));

@@ -20,6 +20,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { actions } from 'features/TodoFeature/slice';
 import {} from 'react-router-dom';
 import { selectPageNumber } from '../../features/TodoFeature/selectors';
+import { selectAuthenticationUserInfo } from '../../features/LoginFeature/selectors';
 
 const TodosPage = () => {
   useInjectSaga({ key: sliceKey, saga });
@@ -28,17 +29,24 @@ const TodosPage = () => {
   const dispatch = useDispatch();
   const [searchParams, setSearchParams] = useSearchParams();
   const page = useSelector(selectPageNumber);
-  const isMounted = useRef(false);
+  const userInfo = useSelector(selectAuthenticationUserInfo);
+  // const isMounted = useRef(false);
 
   const [searchField, setSearchField] = useState('');
   const debounceSearchField = useDebounce(searchField);
 
   useEffect(() => {
-    if (isMounted.current) {
-      dispatch(actions.searchTodos({ name: debounceSearchField, _page: page }));
-    } else {
-      isMounted.current = true;
-    }
+    // if (isMounted.current) {
+    dispatch(
+      actions.searchTodos({
+        name: debounceSearchField,
+        _page: page,
+        userId: userInfo.id,
+      })
+    );
+    // } else {
+    //   isMounted.current = true;
+    // }
   }, [debounceSearchField, dispatch, page]);
 
   useEffect(() => {

@@ -58,8 +58,6 @@ const Todos = ({ setTodoId }: any) => {
 
   if (isError) return <span>{error?.message}</span>;
 
-  console.log(todos);
-
   return (
     <div>
       <h1>Todos</h1>
