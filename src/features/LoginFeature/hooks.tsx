@@ -1,42 +1,40 @@
-import { useEffect } from 'react';
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { ACTION_STATUS } from '../../constants';
-import {
-  selectAuthenticationError,
-  selectAuthenticationStatus,
-  selectAuthenticationUserInfo,
-} from './selectors';
+import { selectAuthenticationError } from './selectors';
 import { actions } from './slice';
 
 const useHooks = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const [open, setOpen] = useState(true);
+  const [openError, setOpenError] = useState(true);
 
-  const status = useSelector(selectAuthenticationStatus);
   const error = useSelector(selectAuthenticationError);
-  const isAuthenticated = useSelector(selectAuthenticationStatus);
-  const userInfo = useSelector(selectAuthenticationUserInfo);
 
-  const onSubmitLogin = (data: any) => {
-    dispatch(actions.login(data));
+  const handleClose = (
+    event?: React.SyntheticEvent | Event,
+    reason?: string
+  ) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpen(false);
   };
 
-  //! Reset state khi mount
-  useEffect(() => {
-    dispatch(actions.reset({}));
-  }, [dispatch]);
-
-  //! Chuyển hướng người dùng về home khi đăng nhập thành công
-  useEffect(() => {
-    if (status === ACTION_STATUS.SUCCESS) {
-      navigate('/');
+  const handleCloseError = (
+    event?: React.SyntheticEvent | Event,
+    reason?: string
+  ) => {
+    if (reason === 'clickaway') {
+      return;
     }
-  }, [navigate, status]);
+
+    dispatch(actions.clearError({}));
+  };
 
   return {
-    handlers: { onSubmitLogin },
-    selectors: { isAuthenticated, userInfo, status, error },
+    handlers: { handleClose, handleCloseError },
+    selectors: { error, open, openError },
   };
 };
 

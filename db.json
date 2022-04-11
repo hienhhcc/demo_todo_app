@@ -13,12 +13,6 @@
       "userId": 1
     },
     {
-      "name": "Make some noiseee",
-      "description": "This is todo descriptionnn",
-      "userId": 1,
-      "id": 14
-    },
-    {
       "id": 15,
       "name": "Watch movies",
       "description": "This is todo description",
@@ -304,6 +298,18 @@
       "description": "ADDED DES",
       "userId": 1,
       "id": "2022-04-07T10:29:15.607Z"
+    },
+    {
+      "id": "2022-04-08T11:52:22.804Z",
+      "name": "ADDED TODO",
+      "description": "ADDED DES",
+      "userId": 1
+    },
+    {
+      "id": "2022-04-08T11:52:29.356Z",
+      "name": "ADDED TODO",
+      "description": "ADDED DES",
+      "userId": 1
     }
   ],
   "users": [
@@ -341,6 +347,21 @@
       "username": "hiendeptrai1",
       "password": "Hiendeptrai1",
       "id": 7
+    },
+    {
+      "username": "vuvinhhien123",
+      "password": "Vuvinhhien123",
+      "id": 8
+    },
+    {
+      "username": "hiendeptrai123",
+      "password": "Hiendeptrai123",
+      "id": 9
+    },
+    {
+      "username": "hiendeptrai1",
+      "password": "Hiendeptrai1",
+      "id": 10
     }
   ]
 }
