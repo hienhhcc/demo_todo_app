@@ -1,10 +1,12 @@
 import { Box, Typography } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { selectIsAuthenticated } from '../../features/LoginFeature/selectors';
+import useAuth from '../../contexts/Auth/useAuth';
+// import { selectIsAuthenticated } from '../../features/LoginFeature/selectors';
 
 const HomePage = () => {
-  const isAuthenticated = useSelector(selectIsAuthenticated);
+  // const isAuthenticated = useSelector(selectIsAuthenticated);
+  const { isAuthenticated } = useAuth();
 
   let content = (
     <Box sx={{ margin: 'auto', mt: 2, textAlign: 'center' }}>

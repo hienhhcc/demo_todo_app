@@ -1,6 +1,7 @@
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { SubmitHandler } from 'react-hook-form';
 
 import { ACTION_STATUS } from '../../../constants';
 import {
@@ -8,7 +9,8 @@ import {
   selectAuthenticationError,
 } from 'features/LoginFeature/selectors';
 import { actions } from 'features/LoginFeature/slice';
-import { SubmitHandler } from 'react-hook-form';
+import useAuth from 'contexts/Auth/useAuth';
+import { loginAPI, loginAPI2 } from '../../../services';
 
 type RegisterFormType = {
   username: string;
@@ -18,30 +20,46 @@ type RegisterFormType = {
 const useLogin = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const { setAuthWhenLogin } = useAuth();
 
-  const status = useSelector(selectAuthenticationStatus);
-  const error = useSelector(selectAuthenticationError);
+  // const status = useSelector(selectAuthenticationStatus);
+  // const error = useSelector(selectAuthenticationError);
 
   const onSubmitLogin: SubmitHandler<RegisterFormType> = useCallback(
-    (data) => {
-      dispatch(actions.login(data));
+    (values) => {
+      const a = async () => {
+        try {
+          setIsLoading(true);
+          const { data } = await loginAPI2(values);
+          setAuthWhenLogin(data[0]);
+          navigate('/');
+        } catch (err: any) {
+          setError(err);
+          setIsLoading(false);
+        }
+      };
+      a();
     },
-    [dispatch]
+    [navigate, setAuthWhenLogin]
   );
 
   //TODO Reset state khi mount
   useEffect(() => {
+    setIsLoading(false);
+    setError(null);
     dispatch(actions.reset({}));
   }, [dispatch]);
 
   //TODO Chuyển hướng người dùng về home khi đăng nhập thành công
-  useEffect(() => {
-    if (status === ACTION_STATUS.SUCCESS) {
-      navigate('/');
-    }
-  }, [navigate, status]);
+  // useEffect(() => {
+  //   if (status === ACTION_STATUS.SUCCESS) {
+  //     navigate('/');
+  //   }
+  // }, [navigate, status]);
 
-  return { selectors: { status, error }, handlers: { onSubmitLogin } };
+  return { selectors: { error, isLoading }, handlers: { onSubmitLogin } };
 };
 
 export default useLogin;

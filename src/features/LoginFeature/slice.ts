@@ -1,8 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { ACTION_STATUS } from '../../constants';
 
-interface InitialState {
+interface IInitialState {
   isAuthenticated: boolean;
+  isLoading: boolean;
   status: string;
   error: null | Error | string;
   userInfo: {
@@ -11,8 +12,9 @@ interface InitialState {
   } | null;
 }
 
-const initialState: InitialState = {
+const initialState: IInitialState = {
   isAuthenticated: false,
+  isLoading: false,
   status: '',
   error: null,
   userInfo: null,
@@ -24,10 +26,12 @@ export const authenticationSlice = createSlice({
   reducers: {
     login(state, action) {
       state.status = ACTION_STATUS.PENDING;
+      state.isLoading = true;
       return state;
     },
     loginSuccess(state, action) {
       state.status = ACTION_STATUS.SUCCESS;
+      state.isLoading = false;
       state.error = null;
       state.userInfo = {
         id: action.payload[0].id,
@@ -38,6 +42,7 @@ export const authenticationSlice = createSlice({
     },
     loginFailed(state, action) {
       state.status = ACTION_STATUS.FAILED;
+      state.isLoading = false;
       state.error = 'Wrong username or password';
       return state;
     },

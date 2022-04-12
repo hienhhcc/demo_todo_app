@@ -1,4 +1,4 @@
-import { loginAPI, registerAPI } from './auth.service';
+import { loginAPI, loginAPI2, registerAPI } from './auth.service';
 import {
   fetchTodoAPI,
   addTodoAPI,
@@ -10,6 +10,7 @@ import {
 
 export {
   loginAPI,
+  loginAPI2,
   registerAPI,
   fetchTodoAPI,
   addTodoAPI,
