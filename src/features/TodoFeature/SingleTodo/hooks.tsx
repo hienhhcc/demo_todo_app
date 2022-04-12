@@ -2,7 +2,8 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ACTION_STATUS } from '../../../constants';
-import { selectAuthenticationUserInfo } from '../../LoginFeature/selectors';
+import useAuth from '../../../contexts/Auth/useAuth';
+// import { selectAuthenticationUserInfo } from '../../LoginFeature/selectors';
 import {
   selectEditStatus,
   selectSearchField,
@@ -16,11 +17,12 @@ const useHooks = () => {
   const { todoId } = useParams();
   const editStatus = useSelector(selectEditStatus);
   const singleTodo = useSelector(selectSingleTodoItem);
-  const userId = useSelector(selectAuthenticationUserInfo).id;
+  // const userId = useSelector(selectAuthenticationUserInfo).id;
+  const { userInfo } = useAuth();
   const searchField = useSelector(selectSearchField);
 
   const onSubmitEditTodo = (data: any) => {
-    dispatch(actions.editTodo({ ...data, todoId, userId }));
+    dispatch(actions.editTodo({ ...data, todoId, userId: userInfo?.id }));
   };
 
   //! Fetch single todo

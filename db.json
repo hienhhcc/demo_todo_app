@@ -362,6 +362,16 @@
       "username": "hiendeptrai1",
       "password": "Hiendeptrai1",
       "id": 10
+    },
+    {
+      "username": "hiendeptrai2",
+      "password": "Hiendeptrai2",
+      "id": 11
+    },
+    {
+      "username": "hiendeptraiquadi",
+      "password": "Hiendeptrai1",
+      "id": 12
     }
   ]
 }

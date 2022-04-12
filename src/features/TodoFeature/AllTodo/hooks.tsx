@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useSearchParams } from 'react-router-dom';
+import useAuth from '../../../contexts/Auth/useAuth';
 import { selectAuthenticationUserInfo } from '../../LoginFeature/selectors';
 import {
   selectPageNumber,
@@ -13,7 +14,8 @@ const useHooks = () => {
   const dispatch = useDispatch();
   const [searchParams, setSearchParams] = useSearchParams();
   const items = useSelector(selectTodoItems);
-  const userInfo = useSelector(selectAuthenticationUserInfo);
+  // const userInfo = useSelector(selectAuthenticationUserInfo);
+  const { userInfo } = useAuth();
   const page = useSelector(selectPageNumber);
   const searchField = useSelector(selectSearchField);
 

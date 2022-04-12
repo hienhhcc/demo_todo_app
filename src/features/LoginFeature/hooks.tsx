@@ -6,7 +6,7 @@ import { actions } from './slice';
 const useHooks = () => {
   const dispatch = useDispatch();
   const [open, setOpen] = useState(true);
-  const [openError, setOpenError] = useState(true);
+  const [openError] = useState(true);
 
   const error = useSelector(selectAuthenticationError);
 
@@ -17,7 +17,6 @@ const useHooks = () => {
     if (reason === 'clickaway') {
       return;
     }
-
     setOpen(false);
   };
 

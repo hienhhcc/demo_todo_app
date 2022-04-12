@@ -14,7 +14,8 @@ import {
   selectPageNumber,
   selectSearchField,
 } from '../../features/TodoFeature/selectors';
-import { selectAuthenticationUserInfo } from '../../features/LoginFeature/selectors';
+import useAuth from '../../contexts/Auth/useAuth';
+// import { selectAuthenticationUserInfo } from '../../features/LoginFeature/selectors';
 
 const TodosPage = () => {
   useInjectSaga({ key: sliceKey, saga });
@@ -23,7 +24,8 @@ const TodosPage = () => {
   const dispatch = useDispatch();
   const [searchParams, setSearchParams] = useSearchParams();
   const page = useSelector(selectPageNumber);
-  const userInfo = useSelector(selectAuthenticationUserInfo);
+  // const userInfo = useSelector(selectAuthenticationUserInfo);
+  const { userInfo } = useAuth();
   const searchField = useSelector(selectSearchField);
   // const isMounted = useRef(false);
 
@@ -36,10 +38,10 @@ const TodosPage = () => {
       actions.searchTodos({
         name: debounceSearchField,
         _page: page,
-        userId: userInfo.id,
+        userId: userInfo?.id,
       })
     );
-  }, [debounceSearchField, dispatch, page, userInfo.id]);
+  }, [debounceSearchField, dispatch, page, userInfo?.id]);
 
   useEffect(() => {
     setSearchParams({ search: searchField, page: page });
