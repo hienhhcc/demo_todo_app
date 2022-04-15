@@ -2,7 +2,7 @@ import AuthContext from './authContext';
 import useAuthContextProvider from './useAuthContextProvider';
 
 interface AuthContextProviderProps {
-  children: React.ReactElement | React.ReactElement[];
+  children: React.ReactElement;
 }
 
 const AuthContextProvider = ({ children }: AuthContextProviderProps) => {

@@ -1,5 +1,3 @@
-import { yupResolver } from '@hookform/resolvers/yup';
-import { createElement } from 'react';
 import {
   FormProvider,
   SubmitHandler,
@@ -17,29 +15,28 @@ interface Props<T> {
   options: UseFormProps | any;
 }
 
-const Form = <T,>({ schema, children, onSubmit, options }: Props<T>) => {
-  const resolver = schema ? yupResolver(schema) : undefined;
-  options = { ...options, resolver };
+const Form = <T,>({ children, onSubmit, options }: Props<T>) => {
+  options = { ...options };
   const methods = useForm<T>(options);
 
   const { handleSubmit } = methods;
 
   return (
     <FormProvider {...methods}>
-      <StyledForm onSubmit={handleSubmit(onSubmit)}>
-        {children.map((child: any) => {
-          if (child.name) {
-            return createElement(child.type, {
-              key: child.name,
-              ...child.props,
-            });
-          } else {
-            return child;
-          }
-        })}
-      </StyledForm>
+      <StyledForm onSubmit={handleSubmit(onSubmit)}>{children}</StyledForm>
     </FormProvider>
   );
 };
 
 export default Form;
+
+// {children.map((child: any) => {
+//   if (child.name) {
+//     return createElement(child.type, {
+//       key: child.name,
+//       ...child.props,
+//     });
+//   } else {
+//     return child;
+//   }
+// })}

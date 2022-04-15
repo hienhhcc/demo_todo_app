@@ -1,3 +1,4 @@
+import { yupResolver } from '@hookform/resolvers/yup';
 import { PersonAdd } from '@mui/icons-material';
 import { Button, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
@@ -31,9 +32,11 @@ const RegisterForm = () => {
     handlers: { onSubmitRegister },
   } = useRegister();
 
+  const resolver = schema ? yupResolver(schema) : undefined;
+
   return (
     <Form
-      options={{ criteriaMode: 'all', mode: 'all' }}
+      options={{ criteriaMode: 'all', mode: 'all', resolver }}
       schema={schema}
       onSubmit={onSubmitRegister}
     >

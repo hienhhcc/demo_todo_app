@@ -1,6 +1,7 @@
 import { useReducer } from 'react';
 
 import { IAuthState, IAuthAction, IAuthContext, IUserInfo } from 'types';
+
 import { EAuthAction } from '../../utils/enums';
 
 const authReducer = (state: IAuthState, action: IAuthAction) => {
@@ -37,8 +38,6 @@ const useAuthContextProvider = (): IAuthContext => {
   };
 
   return {
-    // isLoading: authState.isLoading,
-    // error: authState.error,
     isAuthenticated: authState.isAuthenticated,
     userInfo: authState.userInfo,
     setAuthWhenLogin,
