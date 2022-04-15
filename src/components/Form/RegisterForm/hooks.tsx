@@ -24,6 +24,7 @@ const useRegister = () => {
 
   const onSubmitRegister: SubmitHandler<RegisterFormType> = useCallback(
     (data) => {
+      console.log('hello');
       dispatch(actions.register(data));
     },
     [dispatch]
